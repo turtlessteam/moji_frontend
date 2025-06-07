@@ -5,16 +5,13 @@ import mixpanel from "mixpanel-browser";
 interface BottomSectionProps {
   animate?: "highlight" | "initial";
   bgColor?: string;
+  onClick?: () => void; // 추가
 }
 
-const Bottom: React.FC<BottomSectionProps> = ({ animate }) => {
+const Bottom: React.FC<BottomSectionProps> = ({ animate, onClick }) => {
   const [buttonAnimate, setButtonAnimate] = useState<"initial" | "highlight">(
     "initial"
   );
-
-  const reservBtnClick = () => {
-    mixpanel.track("사전예약버튼 클릭");
-  };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -36,6 +33,11 @@ const Bottom: React.FC<BottomSectionProps> = ({ animate }) => {
     },
   };
 
+  const handleClick = () => {
+    mixpanel.track("사전예약버튼 클릭");
+    if (onClick) onClick(); // Main에서 내려준 함수 실행
+  };
+
   return (
     <div className="button_container_style pt-1">
       <div className="flex justify-center gap-2 mt-1 mb-4">
@@ -55,7 +57,7 @@ const Bottom: React.FC<BottomSectionProps> = ({ animate }) => {
             cursor: "pointer",
           }}
           variants={buttonVariants}
-          onClick={reservBtnClick}
+          onClick={handleClick}
           initial="initial"
           animate={animate === "highlight" ? buttonAnimate : "initial"}
           whileTap={{ scale: 0.95 }}
