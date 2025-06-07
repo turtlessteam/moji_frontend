@@ -1,12 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import { Main } from "@/pages/main/page";
-import { Onboarding } from "./onboarding/page";
 
 export function MainRouter() {
   return (
     <Routes>
-      <Route path="/main" element={<Main />} />
-      <Route path="/" element={<Onboarding />} />
+      <Route path="/" element={<Main />} />
     </Routes>
   );
 }
